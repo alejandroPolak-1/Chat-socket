@@ -9,7 +9,7 @@ socket.on('disconnect', function () {
   console.log('We lost connection with the server')
 })
 
-// Enviar información
+// send information
 socket.emit(
   'sendMessage',
   {
