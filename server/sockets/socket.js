@@ -4,8 +4,8 @@ io.on('connection', (client) => {
   console.log('Connected user')
 
   client.emit('sendMessage', {
-    usuario: 'Admin',
-    mensaje: 'Welcome to this app',
+    user: 'Admin',
+    message: 'Welcome to this app',
   })
 
   client.on('disconnect', () => {
@@ -16,14 +16,15 @@ io.on('connection', (client) => {
   client.on('sendMessage', (data, callback) => {
     console.log(data)
 
-    if (data.user) {
-      callback({
-        resp: 'All went well!',
-      })
-    } else {
-      callback({
-        resp: 'Everything went wrong!!!!!!!!',
-      })
-    }
+    client.broadcast.emit('sendMessage', data)
+    // if (data.user) {
+    //   callback({
+    //     resp: 'All went well!',
+    //   })
+    // } else {
+    //   callback({
+    //     resp: 'Everything went wrong!!!!!!!!',
+    //   })
+    // }
   })
 })
