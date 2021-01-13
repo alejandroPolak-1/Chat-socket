@@ -3,10 +3,11 @@ var socket = io()
 //for to handle user
 var params = new URLSearchParams(window.location.search)
 
-if (!params.has('name')) {
+//name and room is required
+if (!params.has('name') || !params.has('room')) {
   // redirection
   window.location = 'index.html'
-  throw new Error('The name is required')
+  throw new Error('The name and room are required')
 }
 
 var user = {
