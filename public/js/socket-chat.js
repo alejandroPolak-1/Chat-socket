@@ -20,7 +20,8 @@ socket.on('connect', function () {
 
   //callback if accept
   socket.emit('enterChat', user, function (resp) {
-    console.log('Users connected ', resp)
+    // console.log('Users connected ', resp)
+    renderUsers(resp)
   })
 })
 
@@ -36,7 +37,8 @@ socket.on('createMessage', function (message) {
 
 //Listen change of users _> whwn user enter or get out of chat
 socket.on('listPeople', function (people) {
-  console.log(people)
+  // console.log(people)
+  renderUsers(people)
 })
 
 //private messages (action)

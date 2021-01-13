@@ -995,7 +995,7 @@ File: scss
     display: none; }
 
 .page-wrapper {
-  background: #f4f6f9;
+  background: #b4c9e9;
   padding-bottom: 60px;
   position: relative; }
 
@@ -1007,7 +1007,7 @@ File: scss
   .card .card-subtitle {
     font-weight: 300;
     margin-bottom: 15px;
-    color: #99abb4; }
+    color: #8e9aa0; }
   .card .card-title {
     position: relative; }
 
@@ -5835,7 +5835,7 @@ File: scss
     -webkit-transition: 0.5s ease-in;
     -o-transition: 0.5s ease-in;
     transition: 0.5s ease-in;
-    background: #ffffff; }
+    background: #bebaba; }
     .chat-main-box .chat-left-aside.open-pnl {
       left: 0px; }
     .chat-main-box .chat-left-aside .open-panel {
