@@ -27,7 +27,7 @@ io.on('connection', (client) => {
   })
 
   // created meje and send everyone
-  client.on('createMessage', (data) => {
+  client.on('createMessage', (data, callback) => {
     //logged person
     let person = users.getPerson(client.id)
 
@@ -35,6 +35,8 @@ io.on('connection', (client) => {
 
     //message only people in the same room(data.room)
     client.broadcast.to(person.room).emit('createMessage', message)
+
+    callback(message)
   })
 
   //clean user disconnected
