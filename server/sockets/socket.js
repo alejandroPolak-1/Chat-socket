@@ -14,6 +14,9 @@ io.on('connection', (client) => {
 
     let people = users.addPerson(client.id, data.name)
 
+    //List's people connected
+    client.broadcast.emit('listPeople', users.getPeople())
+
     callback(people)
   })
 
@@ -22,9 +25,12 @@ io.on('connection', (client) => {
     //not to repeat users if you update the web
     let personDeleted = users.deletePerson(client.id)
 
-    client.broadcast.emit('sendMessage', {
+    client.broadcast.emit('createMessage', {
       user: 'Admin',
       message: `${personDeleted.name} left the chat`,
     })
+
+    //New list's people connected
+    client.broadcast.emit('listPeople', users.getPeople())
   })
 })

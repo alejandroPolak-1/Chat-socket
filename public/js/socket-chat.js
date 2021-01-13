@@ -43,3 +43,8 @@ socket.emit(
 socket.on('createMessage', function (message) {
   console.log('Server:', message)
 })
+
+//Listen change of users _> whwn user enter or get out of chat
+socket.on('listPeople', function (people) {
+  console.log(people)
+})
