@@ -1,10 +1,28 @@
 var socket = io()
 
+//for to handle user
+var params = new URLSearchParams(window.location.search)
+
+if (!params.has('name')) {
+  // redirection
+  window.location = 'index.html'
+  throw new Error('The name is required')
+}
+
+var user = {
+  name: params.get('name'),
+}
+
 socket.on('connect', function () {
   console.log('Connected to server')
+
+  //callback if accept
+  socket.emit('enterChat', user, function (resp) {
+    console.log('Users connected ', resp)
+  })
 })
 
-// escuchar
+// Listen
 socket.on('disconnect', function () {
   console.log('We lost connection with the server')
 })
@@ -21,7 +39,7 @@ socket.emit(
   }
 )
 
-// Escuchar información
-socket.on('sendMessage', function (message) {
+// Listen information
+socket.on('createMessage', function (message) {
   console.log('Server:', message)
 })

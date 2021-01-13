@@ -1,30 +1,30 @@
 const {io} = require('../server')
+const {Users} = require('../classes/users')
+
+const users = new Users()
 
 io.on('connection', (client) => {
-  console.log('Connected user')
+  client.on('enterChat', (data, callback) => {
+    if (!data.name) {
+      return callback({
+        error: true,
+        message: 'The name is required',
+      })
+    }
 
-  client.emit('sendMessage', {
-    user: 'Admin',
-    message: 'Welcome to this app',
+    let people = users.addPerson(client.id, data.name)
+
+    callback(people)
   })
 
+  //clean user disconnected
   client.on('disconnect', () => {
-    console.log('Disconnected user')
-  })
+    //not to repeat users if you update the web
+    let personDeleted = users.deletePerson(client.id)
 
-  // Listen to client
-  client.on('sendMessage', (data, callback) => {
-    console.log(data)
-
-    client.broadcast.emit('sendMessage', data)
-    // if (data.user) {
-    //   callback({
-    //     resp: 'All went well!',
-    //   })
-    // } else {
-    //   callback({
-    //     resp: 'Everything went wrong!!!!!!!!',
-    //   })
-    // }
+    client.broadcast.emit('sendMessage', {
+      user: 'Admin',
+      message: `${personDeleted.name} left the chat`,
+    })
   })
 })
