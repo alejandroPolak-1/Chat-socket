@@ -1,5 +1,6 @@
 const {io} = require('../server')
 const {Users} = require('../classes/users')
+const {createMessage} = require('../utilities/utilities')
 
 const users = new Users()
 
@@ -17,20 +18,27 @@ io.on('connection', (client) => {
     //List's people connected
     client.broadcast.emit('listPeople', users.getPeople())
 
-    callback(people)
-  })
+    // created meje and send everyone
+    client.on('createMessage', (data) => {
+      //logged person
+      let person = users.getPerson(client.id)
 
-  //clean user disconnected
-  client.on('disconnect', () => {
-    //not to repeat users if you update the web
-    let personDeleted = users.deletePerson(client.id)
+      let message = createMessage(person.name, data.message)
 
-    client.broadcast.emit('createMessage', {
-      user: 'Admin',
-      message: `${personDeleted.name} left the chat`,
+      client.broadcast.emit('createMessage', message)
     })
+    //clean user disconnected
+    client.on('disconnect', () => {
+      //not to repeat users if you update the web
+      let personDeleted = users.deletePerson(client.id)
 
-    //New list's people connected
-    client.broadcast.emit('listPeople', users.getPeople())
+      client.broadcast.emit(
+        'createMessage',
+        createMessage('Admin', `${personDeleted.name} left`)
+      )
+
+      //New list's people connected
+      client.broadcast.emit('listPeople', users.getPeople())
+    })
   })
 })

@@ -28,16 +28,16 @@ socket.on('disconnect', function () {
 })
 
 // send information
-socket.emit(
-  'sendMessage',
-  {
-    user: 'Alejandro Polak',
-    message: 'Hello World',
-  },
-  function (resp) {
-    console.log('server response: ', resp)
-  }
-)
+// socket.emit(
+//   'createMessage',
+//   {
+//     user: 'Alejandro Polak',
+//     message: 'Hello World',
+//   },
+//   function (resp) {
+//     console.log('server response: ', resp)
+//   }
+// )
 
 // Listen information
 socket.on('createMessage', function (message) {
