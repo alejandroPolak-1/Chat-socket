@@ -29,18 +29,6 @@ socket.on('disconnect', function () {
   console.log('We lost connection with the server')
 })
 
-// send information
-// socket.emit(
-//   'createMessage',
-//   {
-//     user: 'Alejandro Polak',
-//     message: 'Hello World',
-//   },
-//   function (resp) {
-//     console.log('server response: ', resp)
-//   }
-// )
-
 // Listen information
 socket.on('createMessage', function (message) {
   console.log('Server:', message)
