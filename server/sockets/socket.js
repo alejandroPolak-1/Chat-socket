@@ -23,6 +23,12 @@ io.on('connection', (client) => {
       .to(data.room)
       .emit('listPeople', users.getPeopleRoom(data.room))
 
+      
+        // message what person joined
+    client.broadcast
+      .to(data.room)
+      .emit('createMessage',createMessage('Admin', `${data.name} joined`))
+
     callback(users.getPeopleRoom(data.room))
   })
 
@@ -35,7 +41,8 @@ io.on('connection', (client) => {
 
     //message only people in the same room(data.room)
     client.broadcast.to(person.room).emit('createMessage', message)
-
+   
+  
     callback(message)
   })
 

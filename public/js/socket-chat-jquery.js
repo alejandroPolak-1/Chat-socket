@@ -1,6 +1,11 @@
 //for to handle user
 var params = new URLSearchParams(window.location.search)
 
+for (let p of params) {
+     console.log(p, "PPP");
+  }
+
+
 // var name= params.get('name');
 // var room= params.get('room');
 
@@ -12,12 +17,13 @@ var txtMessage= $('#txtMessage')
 var divChatbox= $('#divChatbox')
 
 
+// console.log(people, "PEOPLE")
 
 //function to render users
 function renderUsers(people) {
   //[{},{}]
 
-//   console.log(people)
+//   console.log(people, "PEOPLE")
 
 // ========  
 // title to Header
@@ -50,18 +56,44 @@ for( var i = 0; i< people.length; i++) {
     divUsers.html(html)
 }
 
-function renderMessages( message ) { 
+function renderMessages( message, mine) { 
 
     var html =''
+    var date = new Date(message.date)
+    var hour = date.getHours() + ':' + date.getMinutes()
 
-        html += '<li class="animated fadeIn">';
-        html += '<div class="chat-img"> <img src="assets/images/users/1.jpg" alt="user" /> </div>';
-        html += '<div class="chat-content">';
-        html += '<h5>'+ message.name +'</h5>';
-        html += '<div class="box bg-light-info"> '+ message.message +' </div>';
-        html += '</div>';
-        html += '<div class="chat-time">10:56 am</div>';
-        html += '</li>';
+    var adminClass = 'info';
+    if ( message.name === 'Admin') {
+        adminClass= 'danger';
+    }
+       
+        if(mine){
+            // messages I receive
+            html += '<li class="reverse">';
+            html += '<div class="chat-content">';
+            html += '    <h5> '+ message.name +'</h5>';
+            html += '    <div class="box bg-light-inverse"> '+ message.message +' </div>';
+            html += '  </div>';
+            html += ' <div class="chat-img">';
+            html += '     <img src="assets/images/users/1.jpg" alt="user" />';
+            html += ' </div>';
+            html += '    <div class="chat-time">'+hour+'</div>';
+            html += '</li>';
+        } else {
+            //messages I send
+            html += '<li class="animated fadeIn">';
+
+            if(message.name !== 'Admin') {
+                html += '<div class="chat-img"> <img src="assets/images/users/1.jpg" alt="user" /> </div>';
+            }
+
+            html += '<div class="chat-content">';
+            html += '<h5>'+ message.name +'</h5>';
+            html += '<div class="box bg-light-'+ adminClass +'"> '+ message.message +' </div>';
+            html += '</div>';
+            html += '<div class="chat-time">'+hour+'</div>';
+            html += '</li>';
+        }
 
 
     divChatbox.append(html)
@@ -91,7 +123,7 @@ sendForm.on('submit', function(e){
         message: txtMessage.val()
     }, function (message) {
      txtMessage.val('').focus();
-     renderMessages(message);
+     renderMessages(message, true);
     })
 })
 
