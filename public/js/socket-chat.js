@@ -12,6 +12,7 @@ if (!params.has('name') || !params.has('room')) {
 
 var user = {
   name: params.get('name'),
+  room: params.get('room'),
 }
 
 socket.on('connect', function () {

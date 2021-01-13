@@ -18,39 +18,42 @@ io.on('connection', (client) => {
 
     let people = users.addPerson(client.id, data.name, data.room)
 
-    //List's people connected
+    //List's people connected (send information all people in the same room)
     client.broadcast.emit('listPeople', users.getPeople())
 
-    // created meje and send everyone
-    client.on('createMessage', (data) => {
-      //logged person
-      let person = users.getPerson(client.id)
+    callback(people)
+  })
 
-      let message = createMessage(person.name, data.message)
+  // created meje and send everyone
+  client.on('createMessage', (data) => {
+    //logged person
+    let person = users.getPerson(client.id)
 
-      client.broadcast.emit('createMessage', message)
-    })
-    //clean user disconnected
-    client.on('disconnect', () => {
-      //not to repeat users if you update the web
-      let personDeleted = users.deletePerson(client.id)
+    let message = createMessage(person.name, data.message)
 
-      client.broadcast.emit(
-        'createMessage',
-        createMessage('Admin', `${personDeleted.name} left`)
-      )
+    client.broadcast.emit('createMessage', message)
+  })
 
-      //New list's people connected
-      client.broadcast.emit('listPeople', users.getPeople())
-    })
+  //clean user disconnected
+  client.on('disconnect', () => {
+    //not to repeat users if you update the web
+    let personDeleted = users.deletePerson(client.id)
 
-    //private message
-    client.on('privateMessage', (data) => {
-      let person = users.getPerson(client.id)
+    client.broadcast.emit(
+      'createMessage',
+      createMessage('Admin', `${personDeleted.name} left`)
+    )
 
-      client.broadcast
-        .to(data.for)
-        .emit('privateMessage', createMessage(person.name, data.message))
-    })
+    //New list's people connected
+    client.broadcast.emit('listPeople', users.getPeople())
+  })
+
+  //private message
+  client.on('privateMessage', (data) => {
+    let person = users.getPerson(client.id)
+
+    client.broadcast
+      .to(data.for)
+      .emit('privateMessage', createMessage(person.name, data.message))
   })
 })
