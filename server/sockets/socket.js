@@ -16,12 +16,14 @@ io.on('connection', (client) => {
     //for user joins room
     client.join(data.room)
 
-    let people = users.addPerson(client.id, data.name, data.room)
+    users.addPerson(client.id, data.name, data.room)
 
     //List's people connected (send information all people in the same room)
-    client.broadcast.emit('listPeople', users.getPeople())
+    client.broadcast
+      .to(data.room)
+      .emit('listPeople', users.getPeopleRoom(data.room))
 
-    callback(people)
+    callback(users.getPeopleRoom(data.room))
   })
 
   // created meje and send everyone
@@ -31,7 +33,8 @@ io.on('connection', (client) => {
 
     let message = createMessage(person.name, data.message)
 
-    client.broadcast.emit('createMessage', message)
+    //message only people in the same room(data.room)
+    client.broadcast.to(person.room).emit('createMessage', message)
   })
 
   //clean user disconnected
@@ -39,13 +42,18 @@ io.on('connection', (client) => {
     //not to repeat users if you update the web
     let personDeleted = users.deletePerson(client.id)
 
-    client.broadcast.emit(
-      'createMessage',
-      createMessage('Admin', `${personDeleted.name} left`)
-    )
+    //send message only room where is the personDeleted
+    client.broadcast
+      .to(personDeleted.room)
+      .emit(
+        'createMessage',
+        createMessage('Admin', `${personDeleted.name} left`)
+      )
 
     //New list's people connected
-    client.broadcast.emit('listPeople', users.getPeople())
+    client.broadcast
+      .to(personDeleted.room)
+      .emit('listPeople', users.getPeopleRoom(personDeleted.room))
   })
 
   //private message

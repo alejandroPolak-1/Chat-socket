@@ -21,7 +21,10 @@ class Users {
     return this.people
   }
 
-  getPeopleRoom(room) {}
+  getPeopleRoom(room) {
+    let personRoom = this.people.filter((person) => person.room === room)
+    return personRoom
+  }
 
   deletePerson(id) {
     //to get person desconnected
