@@ -48,3 +48,8 @@ socket.on('createMessage', function (message) {
 socket.on('listPeople', function (people) {
   console.log(people)
 })
+
+//private messages (action)
+socket.on('privateMessage', function (message) {
+  console.log('Private message:', message)
+})

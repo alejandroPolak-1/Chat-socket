@@ -40,5 +40,14 @@ io.on('connection', (client) => {
       //New list's people connected
       client.broadcast.emit('listPeople', users.getPeople())
     })
+
+    //private message
+    client.on('privateMessage', (data) => {
+      let person = users.getPerson(client.id)
+
+      client.broadcast
+        .to(data.for)
+        .emit('privateMessage', createMessage(person.name, data.message))
+    })
   })
 })
