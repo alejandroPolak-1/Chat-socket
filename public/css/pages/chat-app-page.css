@@ -59,7 +59,7 @@ chat application Page
       left top,
       left bottom,
       from(#398bf7),
-      to(#398bf7)
+      to(#708eb6)
     ),
     -webkit-gradient(linear, left top, left bottom, from(rgba(120, 130, 140, 0.13)), to(rgba(120, 130, 140, 0.13)));
   background-image: -webkit-linear-gradient(#398bf7, #398bf7),
@@ -118,6 +118,6 @@ chat application Page
   bottom: 10px;
 }
 .chat-main-box .chat-right-aside .send-chat-box .custom-send .cst-icon {
-  color: #67757c;
+  color: #030608;
   margin-right: 10px;
 }

@@ -70,18 +70,18 @@ function renderMessages( data, mine) {
             html += '    <h5> '+ data.name +'</h5>';
             html += '    <div class="box bg-light-inverse"> '+ data.message +' </div>';
             html += '  </div>';
-            html += ' <div class="chat-img">';
-            html += '     <img src="assets/images/users/emoji.png" alt="user" />';
-            html += ' </div>';
+            // html += ' <div class="chat-img">';
+            // html += '     <img src="assets/images/users/emoji.png" alt="user" />';
+            // html += ' </div>';
             html += '    <div class="chat-time">'+hour+'</div>';
             html += '</li>';
         } else {
             //messages I send
             html += '<li class="animated fadeIn">';
 
-            if(data.name !== 'Admin') {
-                html += '<div class="chat-img"> <img src="assets/images/users/emoji.png" alt="user" /> </div>';
-            }
+            // if(data.name !== 'Admin') {
+            //     html += '<div class="chat-img"> <img src="assets/images/users/emoji.png" alt="user" /> </div>';
+            // }
 
             html += '<div class="chat-content">';
             html += '<h5>'+ data.name +'</h5>';
