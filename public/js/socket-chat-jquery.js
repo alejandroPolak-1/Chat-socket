@@ -14,7 +14,6 @@ var txtMessage= $('#txtMessage')
 var divChatbox= $('#divChatbox')
 
 
-// console.log(people, "PEOPLE")
 
 //function to render users
 function renderUsers(people) {
@@ -51,14 +50,16 @@ for( var i = 0; i< people.length; i++) {
     divUsers.html(html)
 }
 
-function renderMessages( message, mine) { 
+function renderMessages( data, mine) { 
 
-    var html =''
-    var date = new Date(message.date)
+     var html =''
+    var date = new Date(data.date)
     var hour = date.getHours() + ':' + date.getMinutes()
 
+
+
     var adminClass = 'info';
-    if ( message.name === 'Admin') {
+    if ( data.name === 'Admin') {
         adminClass= 'danger';
     }
        
@@ -66,11 +67,11 @@ function renderMessages( message, mine) {
             // messages I receive
             html += '<li class="reverse">';
             html += '<div class="chat-content">';
-            html += '    <h5> '+ message.name +'</h5>';
-            html += '    <div class="box bg-light-inverse"> '+ message.message +' </div>';
+            html += '    <h5> '+ data.name +'</h5>';
+            html += '    <div class="box bg-light-inverse"> '+ data.message +' </div>';
             html += '  </div>';
             html += ' <div class="chat-img">';
-            html += '     <img src="assets/images/users/1.jpg" alt="user" />';
+            html += '     <img src="assets/images/users/emoji.png" alt="user" />';
             html += ' </div>';
             html += '    <div class="chat-time">'+hour+'</div>';
             html += '</li>';
@@ -78,13 +79,13 @@ function renderMessages( message, mine) {
             //messages I send
             html += '<li class="animated fadeIn">';
 
-            if(message.name !== 'Admin') {
-                html += '<div class="chat-img"> <img src="assets/images/users/1.jpg" alt="user" /> </div>';
+            if(data.name !== 'Admin') {
+                html += '<div class="chat-img"> <img src="assets/images/users/emoji.png" alt="user" /> </div>';
             }
 
             html += '<div class="chat-content">';
-            html += '<h5>'+ message.name +'</h5>';
-            html += '<div class="box bg-light-'+ adminClass +'"> '+ message.message +' </div>';
+            html += '<h5>'+ data.name +'</h5>';
+            html += '<div class="box bg-light-'+ adminClass +'"> '+ data.message +' </div>';
             html += '</div>';
             html += '<div class="chat-time">'+hour+'</div>';
             html += '</li>';
