@@ -33,13 +33,15 @@ socket.on('disconnect', function () {
 // Listen information
 socket.on('createMessage', function (message) {
   // console.log('Server:', message)
-  renderMessages(message, false)
+  renderMessages(message, false);
+  scrollBottom();
 })
 
 //Listen change of users _> whwn user enter or get out of chat
 socket.on('listPeople', function (people) {
-  // console.log(people)
+  
   renderUsers(people)
+ 
 })
 
 //private messages (action)
